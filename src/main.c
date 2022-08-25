@@ -28,7 +28,7 @@ void tsl2591_test(void *pvParameters)
     while (1)
     {
         vTaskDelay(pdMS_TO_TICKS(1000));
-
+        // Get the lighting in Lux
         if ((res = tsl2591_get_lux(&dev, &lux)) != ESP_OK)
             printf("Could not read lux value: %d\n", res);
         else
