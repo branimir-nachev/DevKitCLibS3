@@ -27,11 +27,11 @@ void tsl2591_test(void *pvParameters)
     esp_err_t res;
     while (1)
     {
-        vTaskDelay(pdMS_TO_TICKS(1000));
         if ((res = tsl2591_get_lux(&dev, &lux)) != ESP_OK)
             printf("Could not read lux value: %d\n", res);
         else
             printf("Lux: %f\n", lux);
+        vTaskDelay(pdMS_TO_TICKS(1000));
     }
 }
 
@@ -63,5 +63,5 @@ void app_main()
     ESP_ERROR_CHECK(i2cdev_init());
 
     xTaskCreatePinnedToCore(task, "mcp9808_test", configMINIMAL_STACK_SIZE * 8, NULL, 5, NULL, APP_CPU_NUM);
-    xTaskCreatePinnedToCore(tsl2591_test, "tsl2591_test", configMINIMAL_STACK_SIZE * 8, NULL, 5, NULL, APP_CPU_NUM);
+    xTaskCreatePinnedToCore(tsl2591_test, "tsl2591_test", configMINIMAL_STACK_SIZE * 8, NULL, 5, NULL, PRO_CPU_NUM);
 }
